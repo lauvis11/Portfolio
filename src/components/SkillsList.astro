@@ -9,23 +9,6 @@ const skills = [
       "Sitios y portfolios interactivos de alto rendimiento",
     ],
   },
-  {
-    category: "Desarrollo Mobile",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[var(--sec)]"><rect width="10" height="14" x="3" y="8" rx="2"/><path d="M5 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2h-2.4"/><path d="M8 18h.01"/></svg>`,
-    items: [
-      "Aplicaciones web responsivas y adaptables",
-      "Aplicaciones móviles con React Native",
-    ],
-  },
-  {
-    category: "Diseño UI/UX & Prototipado",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[var(--sec)]"><path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/><path d="M5 17A12 12 0 0 1 17 5"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/></svg>`,
-    items: [
-      "Diseño de interfaces con Figma",
-      "Investigación y mejoras de experiencia de usuario (UX)",
-      "Prototipado interactivo para web y mobile",
-    ],
-  },
 ];
 ---
 
@@ -33,97 +16,27 @@ const skills = [
   <h3 class="text-[var(--white)] text-3xl md:text-4xl font-semibold md:mb-6">
     ¿Qué hago?
   </h3>
-  <ul class="space-y-4 mt-4 text-lg">
+  <div class="mt-4">
     {
       skills.map((skill) => (
-        <li class="w-full">
-          <div class="skill-item md:w-[400px] w-full bg-[#1414149c] rounded-2xl text-left hover:bg-opacity-80 transition-all border border-[var(--white-icon-tr)] cursor-pointer overflow-hidden">
-            <button
-              type="button"
-              class="w-full flex items-center gap-3 p-4 text-left cursor-pointer focus:outline-none"
-              aria-expanded="false"
-            >
-              <div class="flex-shrink-0" set:html={skill.icon} />
-              <div class="flex items-center gap-2 flex-grow justify-between">
-                <div class="min-w-0 max-w-[200px] md:max-w-none overflow-hidden">
-                  <span class="block truncate text-[var(--white)] text-lg">
-                    {skill.category}
-                  </span>
-                </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="arrow-icon w-6 h-6 text-[var(--white)] transform transition-transform flex-shrink-0"
-                >
-                  <path d="M11.9999 13.1714L16.9497 8.22168L18.3639 9.63589L11.9999 15.9999L5.63599 9.63589L7.0502 8.22168L11.9999 13.1714Z" />
-                </svg>
-              </div>
-            </button>
-
-            <div class="skill-content transition-all duration-300 px-4 max-h-0 opacity-0 overflow-hidden">
-              <ul class="space-y-2 text-[var(--white-icon)] text-sm pb-4">
-                {skill.items.map((item) => (
-                  <li class="flex items-center">
-                    <span class="pl-1">•</span>
-                    <span class="pl-3">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div class="md:w-[400px] w-full bg-[#1414149c] rounded-2xl p-5 text-left border border-[var(--white-icon-tr)] transition-all hover:border-[var(--sec)]/40">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="flex-shrink-0" set:html={skill.icon} />
+            <h4 class="text-[var(--white)] text-xl font-medium">
+              {skill.category}
+            </h4>
           </div>
-        </li>
+
+          <ul class="space-y-2.5 text-[var(--white-icon)] text-sm">
+            {skill.items.map((item) => (
+              <li class="flex items-start">
+                <span class="text-[var(--sec)] pr-2 font-bold">•</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       ))
     }
-  </ul>
+  </div>
 </div>
-
-<script>
-  function setupSkillsAccordion() {
-    const items = document.querySelectorAll<HTMLElement>(".skill-item");
-
-    items.forEach((item) => {
-      const button = item.querySelector<HTMLButtonElement>("button");
-      const content = item.querySelector<HTMLElement>(".skill-content");
-      const arrow = item.querySelector<HTMLElement>(".arrow-icon");
-
-      if (!button || !content || !arrow) return;
-
-      button.addEventListener("click", () => {
-        const isExpanded = button.getAttribute("aria-expanded") === "true";
-
-        // Close other items for single-accordion behavior
-        items.forEach((otherItem) => {
-          if (otherItem !== item) {
-            const otherBtn = otherItem.querySelector<HTMLButtonElement>("button");
-            const otherContent = otherItem.querySelector<HTMLElement>(".skill-content");
-            const otherArrow = otherItem.querySelector<HTMLElement>(".arrow-icon");
-            if (otherBtn && otherContent && otherArrow) {
-              otherBtn.setAttribute("aria-expanded", "false");
-              otherContent.style.maxHeight = "0px";
-              otherContent.classList.remove("opacity-100");
-              otherContent.classList.add("opacity-0");
-              otherArrow.classList.remove("rotate-180");
-            }
-          }
-        });
-
-        if (isExpanded) {
-          button.setAttribute("aria-expanded", "false");
-          content.style.maxHeight = "0px";
-          content.classList.remove("opacity-100");
-          content.classList.add("opacity-0");
-          arrow.classList.remove("rotate-180");
-        } else {
-          button.setAttribute("aria-expanded", "true");
-          content.style.maxHeight = `${content.scrollHeight}px`;
-          content.classList.remove("opacity-0");
-          content.classList.add("opacity-100");
-          arrow.classList.add("rotate-180");
-        }
-      });
-    });
-  }
-
-  setupSkillsAccordion();
-</script>
