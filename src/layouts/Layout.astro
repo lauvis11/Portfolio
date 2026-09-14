@@ -50,13 +50,13 @@ const {
 
   :root {
     --background: #101010;
-    --sec: #a476ff;
+    --sec: #2D4CFC;
     --white: #dfdfdf;
     --white-icon: #f3f3f398;
     --white-icon-tr: #f3f3f310;
     --container: #18181b;
     --line: #27272a;
-    --pink: #a476ff;
+    --pink: #2D4CFC;
   }
 
   * {
@@ -98,5 +98,25 @@ const {
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--container) var(--background);
+  }
+
+  .shiny-sec {
+    background: linear-gradient(135deg, var(--sec) 25%, #93c5fd 50%, var(--sec) 75%);
+    background-size: 400% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    animation: shine 3s linear infinite;
+  }
+
+  @keyframes shine {
+    0% {
+      background-position: 100% 50%;
+    }
+    30%,
+    70% {
+      background-position: 0% 50%;
+    }
   }
 </style>

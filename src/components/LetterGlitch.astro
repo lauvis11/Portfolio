@@ -8,7 +8,7 @@ interface Props {
 }
 
 const {
-  glitchColors = ["#5e4491", "#A476FF", "#241a38"],
+  glitchColors = ["#1e34b8", "#2D4CFC", "#121a42"],
   glitchSpeed = 33,
   centerVignette = false,
   outerVignette = true,
@@ -43,7 +43,7 @@ const {
       const canvas = container.querySelector<HTMLCanvasElement>(".letter-glitch-canvas");
       if (!canvas) return;
 
-      const glitchColors: string[] = JSON.parse(container.dataset.colors || '["#5e4491", "#A476FF", "#241a38"]');
+      const glitchColors: string[] = JSON.parse(container.dataset.colors || '["#1e34b8", "#2D4CFC", "#121a42"]');
       const glitchSpeed = parseInt(container.dataset.speed || "33", 10);
       const smooth = container.dataset.smooth === "true";
 

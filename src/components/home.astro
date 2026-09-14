@@ -16,7 +16,7 @@ import SkillsList from "./SkillsList.astro";
         <h1
           class="text-[var(--white)] text-5xl md:text-6xl font-medium text-pretty leading-none"
         >
-          Desarrollador <br /> Fullstack
+          Desarrollador <br /> <span class="text-[var(--sec)]">Fullstack</span>
         </h1>
         <p class="text-md md:text-2xl text-[var(--white-icon)]">
           Transformando ideas en experiencias digitales interactivas, modernas y
@@ -89,7 +89,7 @@ import SkillsList from "./SkillsList.astro";
         class="flex justify-center md:w-full md:h-[292px] size-[290px] pt-3 md:pt-9 md:ml-16"
       >
         <LetterGlitch
-          glitchColors={["#5e4491", "#A476FF", "#241a38"]}
+          glitchColors={["#1e34b8", "#2D4CFC", "#121a42"]}
           glitchSpeed={33}
           centerVignette={false}
           outerVignette={true}
@@ -100,23 +100,3 @@ import SkillsList from "./SkillsList.astro";
   </div>
 </section>
 
-<style is:global>
-  .shiny-sec {
-    background: linear-gradient(135deg, #a476ff 25%, #eee5ff 50%, #a476ff 75%);
-    background-size: 400% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: shine 3s linear infinite;
-  }
-
-  @keyframes shine {
-    0% {
-      background-position: 100% 50%;
-    }
-    30%,
-    70% {
-      background-position: 0% 50%;
-    }
-  }
-</style>
