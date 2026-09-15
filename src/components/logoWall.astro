@@ -1,19 +1,29 @@
 ---
-const technologies = [
-  "astro",
-  "vue",
-  "react",
-  "typeScript",
-  "tailwindcss",
-  "next",
-  "nodejs",
-  "HTML5",
-  "CSS3",
-  "javaScript",
-  "git",
-  "supabase",
-  "mysql",
-  "bash",
+interface TechLogo {
+  name: string;
+  icon: string;
+}
+
+const technologies: TechLogo[] = [
+  { name: "Astro", icon: "/svg/astro.svg" },
+  { name: "React", icon: "/svg/react.svg" },
+  { name: "Next.js", icon: "/svg/next.svg" },
+  { name: "TypeScript", icon: "/svg/typeScript.svg" },
+  { name: "JavaScript", icon: "/svg/javaScript.svg" },
+  { name: "Tailwind CSS", icon: "/svg/tailwindcss.svg" },
+  { name: "CSS3", icon: "/svg/CSS3.svg" },
+  { name: "HTML5", icon: "/svg/HTML5.svg" },
+  { name: "Node.js", icon: "/svg/nodejs.svg" },
+  { name: "Express.js", icon: "/svg/express.svg" },
+  { name: "Python", icon: "/svg/python.svg" },
+  { name: "FastAPI", icon: "/svg/fastapi.svg" },
+  { name: "Supabase", icon: "/svg/supabase.svg" },
+  { name: "PostgreSQL", icon: "/svg/postgresql.svg" },
+  { name: "MySQL", icon: "/svg/mysql.svg" },
+  { name: "SQLite", icon: "/svg/sqlite.svg" },
+  { name: "Git", icon: "/svg/git.svg" },
+  { name: "GitHub", icon: "/svg/github.svg" },
+  { name: "Stitch", icon: "/svg/stitch.png" },
 ];
 ---
 
@@ -29,8 +39,8 @@ const technologies = [
           aria-hidden={index >= technologies.length ? "true" : "false"}
         >
           <img
-            src={`/svg/${tech}.svg`}
-            alt={tech}
+            src={tech.icon}
+            alt={tech.name}
             class="h-7 w-auto object-contain transition-transform group-hover:scale-110 opacity-60"
             width="30"
             height="30"
@@ -38,7 +48,7 @@ const technologies = [
             decoding="async"
           />
           <span class="text-lg font-medium text-[var(--white-icon)] whitespace-nowrap">
-            {tech.charAt(0).toUpperCase() + tech.slice(1)}
+            {tech.name}
           </span>
         </div>
       ))
