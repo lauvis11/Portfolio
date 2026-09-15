@@ -1,10 +1,17 @@
 ---
+interface ProjectTech {
+  name: string;
+  icon: string;
+}
+
 interface Project {
   title: string;
   image: string;
   link: string;
   preview: string;
   status: string;
+  description: string;
+  technologies?: ProjectTech[];
 }
 
 const projects: Project[] = [
@@ -14,6 +21,13 @@ const projects: Project[] = [
     link: "https://github.com/lauvis11",
     preview: "#",
     status: "Completado",
+    description:
+      "Aplicación interactiva desarrollada con React, JavaScript y CSS moderno. Diseñada con un enfoque en alto rendimiento, transiciones visuales fluidas y un diseño totalmente responsivo y accesible.",
+    technologies: [
+      { name: "React", icon: "/svg/react.svg" },
+      { name: "JavaScript", icon: "/svg/javaScript.svg" },
+      { name: "CSS", icon: "/svg/CSS3.svg" },
+    ],
   },
   {
     title: "Proyecto Dos",
@@ -21,6 +35,13 @@ const projects: Project[] = [
     link: "https://github.com/lauvis11",
     preview: "#",
     status: "En Desarrollo",
+    description:
+      "Plataforma web moderna construida con Next.js, TypeScript y Tailwind CSS. Implementa arquitectura modular, renderizado del lado del servidor y optimizaciones avanzadas de rendimiento.",
+    technologies: [
+      { name: "Next.Js", icon: "/svg/next.svg" },
+      { name: "TypeScript", icon: "/svg/typeScript.svg" },
+      { name: "Tailwind CSS", icon: "/svg/tailwindcss.svg" },
+    ],
   },
   {
     title: "Proyecto Tres",
@@ -28,6 +49,13 @@ const projects: Project[] = [
     link: "https://github.com/lauvis11",
     preview: "#",
     status: "Colaboración",
+    description:
+      "Sitio web colaborativo de alta velocidad construido sobre Astro y Tailwind CSS, diseñado para ofrecer tiempos de carga mínimos, excelente indexación SEO y óptima interactividad.",
+    technologies: [
+      { name: "Astro", icon: "/svg/astro.svg" },
+      { name: "Tailwind CSS", icon: "/svg/tailwindcss.svg" },
+      { name: "JavaScript", icon: "/svg/javaScript.svg" },
+    ],
   },
   {
     title: "Proyecto Cuatro",
@@ -35,6 +63,13 @@ const projects: Project[] = [
     link: "https://github.com/lauvis11",
     preview: "#",
     status: "Completado",
+    description:
+      "API REST escalable y segura desarrollada con Python y FastAPI, integrada con persistencia relacional en PostgreSQL y consultas optimizadas para alto volumen de peticiones.",
+    technologies: [
+      { name: "Python", icon: "/svg/python.svg" },
+      { name: "FastAPI", icon: "/svg/fastapi.svg" },
+      { name: "PostgreSQL", icon: "/svg/postgresql.svg" },
+    ],
   },
 ];
 ---
@@ -50,49 +85,78 @@ const projects: Project[] = [
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       {
         projects.map((project) => (
-          <div class="group">
+          <div
+            class="project-card"
+            data-project={JSON.stringify(project)}
+          >
             <div class="block">
-              <div class="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 mb-4 bg-[#141414]">
+              <div class="group cursor-pointer relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 mb-4 bg-[#141414] border border-[#ffffff0f] hover:border-[var(--sec)]/40">
                 <img
                   src={project.image}
                   alt={project.title}
-                  class="w-full h-48 md:h-72 object-cover group-hover:scale-105 transition-transform duration-300"
+                  class="w-full h-48 md:h-72 object-cover"
+                  loading="lazy"
                 />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                  <span class="text-xs font-medium text-white/95 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15 flex items-center gap-1.5 shadow-lg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="size-3.5 text-[var(--sec-bright)]"
+                    >
+                      <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                      <path
+                        fill-rule="evenodd"
+                        d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    Ver detalles
+                  </span>
+                </div>
               </div>
+
               <div class="flex items-center px-3">
                 <div class="flex-grow">
-                  <h4 class="text-2xl font-semibold">{project.title}</h4>
+                  <h4 class="text-2xl font-semibold hover:text-[var(--sec-bright)] transition-colors duration-200 cursor-pointer">
+                    {project.title}
+                  </h4>
                   <span class="py-1 text-sm text-[var(--white-icon)]">
                     {project.status}
                   </span>
                 </div>
-                <div class="flex gap-2 ml-auto">
+
+                <div class="flex gap-2 ml-auto flex-shrink-0">
                   <a
                     target="_blank"
                     href={project.link}
                     aria-label="GitHub"
-                    class="size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
+                    title="Ver código en GitHub"
+                    class="project-direct-btn size-12 md:size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-[var(--white-icon-tr)] p-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      class="size-7"
+                      class="size-6 md:size-7"
                     >
                       <path d="M24 12L18.3431 17.6569L16.9289 16.2426L21.1716 12L16.9289 7.75736L18.3431 6.34315L24 12ZM2.82843 12L7.07107 16.2426L5.65685 17.6569L0 12L5.65685 6.34315L7.07107 7.75736L2.82843 12ZM9.78845 21H7.66009L14.2116 3H16.3399L9.78845 21Z" />
                     </svg>
                   </a>
+
                   <a
                     target="_blank"
                     href={project.preview}
                     aria-label="Preview"
-                    class="size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
+                    title="Visitar sitio web"
+                    class="project-direct-btn size-12 md:size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-[var(--white-icon-tr)] p-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      class="size-7"
+                      class="size-6 md:size-7"
                     >
                       <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z" />
                     </svg>
@@ -104,11 +168,12 @@ const projects: Project[] = [
         ))
       }
     </div>
+
     <a
       target="_blank"
       href="https://github.com/lauvis11"
       aria-label="GitHub"
-      class="w-full flex items-center justify-center gap-2 mt-9 text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-[var(--white-icon-tr)] p-3 rounded-full bg-[#1414149c] hover:bg-[var(--white-icon-tr)] hover:scale-105"
+      class="w-full flex items-center justify-center gap-2 mt-9 text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-[var(--white-icon-tr)] p-3 rounded-full bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
     >
       <span class="md:text-lg text-md">Ver más proyectos en GitHub</span>
       <svg
@@ -123,4 +188,253 @@ const projects: Project[] = [
       </svg>
     </a>
   </div>
+
+  <!-- Modal Detallado de Proyecto -->
+  <div
+    id="project-modal"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-all duration-300"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+  >
+    <!-- Fondo difuminado -->
+    <div
+      id="modal-backdrop"
+      class="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity"
+    >
+    </div>
+
+    <!-- Tarjeta del Modal -->
+    <div
+      id="modal-card"
+      class="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-[#121215] border border-[#ffffff1c] rounded-3xl shadow-2xl shadow-black/90 z-10 scale-95 transition-all duration-300"
+    >
+      <!-- Botón de Cerrar -->
+      <button
+        id="modal-close-btn"
+        type="button"
+        aria-label="Cerrar modal"
+        class="absolute top-4 right-4 z-20 size-10 flex items-center justify-center rounded-full bg-[#1b1b20] hover:bg-[#25252c] text-zinc-400 hover:text-white border border-[#ffffff15] transition-colors cursor-pointer"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="size-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 min-h-[460px]">
+        <!-- Lado Izquierdo: Imagen -->
+        <div
+          class="md:col-span-6 bg-[#0c0c0e] flex items-center justify-center p-6 md:p-8 border-b md:border-b-0 md:border-r border-[#ffffff10]"
+        >
+          <div
+            class="w-full rounded-2xl overflow-hidden border border-[#ffffff12] shadow-xl bg-[#141414]"
+          >
+            <img
+              id="modal-image"
+              src=""
+              alt=""
+              class="w-full h-56 md:h-80 object-cover"
+            />
+          </div>
+        </div>
+
+        <!-- Lado Derecho: Información del Proyecto -->
+        <div
+          class="md:col-span-6 p-6 md:p-8 flex flex-col justify-between space-y-6"
+        >
+          <div class="space-y-4">
+            <div class="flex items-center gap-2.5">
+              <span
+                id="modal-status"
+                class="px-3 py-1 rounded-full text-xs font-semibold bg-[var(--sec)]/15 text-[var(--sec-bright)] border border-[var(--sec)]/30 tracking-wide"
+              >
+              </span>
+            </div>
+
+            <h3
+              id="modal-title"
+              class="text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight"
+            >
+            </h3>
+
+            <p
+              id="modal-description"
+              class="text-sm md:text-base text-zinc-300 leading-relaxed"
+            >
+            </p>
+
+            <!-- Tecnologías -->
+            <div class="pt-2">
+              <h4
+                class="text-xs uppercase tracking-wider font-semibold text-zinc-400 mb-3"
+              >
+                Tecnologías utilizadas
+              </h4>
+              <div id="modal-technologies" class="flex flex-wrap items-center gap-x-5 gap-y-3"></div>
+            </div>
+          </div>
+
+          <!-- Botones de Acción (<> para código, -> para web) -->
+          <div
+            class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4 border-t border-[#ffffff10]"
+          >
+            <!-- Ver Código (<>) -->
+            <a
+              id="modal-code-link"
+              target="_blank"
+              href="#"
+              class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-[var(--white-icon-tr)] bg-[#1414149c] hover:bg-[var(--white-icon-tr)] text-white text-sm font-medium transition duration-300 cursor-pointer"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-5 text-[var(--sec-bright)]"
+              >
+                <path
+                  d="M24 12L18.3431 17.6569L16.9289 16.2426L21.1716 12L16.9289 7.75736L18.3431 6.34315L24 12ZM2.82843 12L7.07107 16.2426L5.65685 17.6569L0 12L5.65685 6.34315L7.07107 7.75736L2.82843 12ZM9.78845 21H7.66009L14.2116 3H16.3399L9.78845 21Z"
+                ></path>
+              </svg>
+              <span>Ver código</span>
+            </a>
+
+            <!-- Ir a la Web (->) -->
+            <a
+              id="modal-preview-link"
+              target="_blank"
+              href="#"
+              class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--sec)] hover:bg-[var(--sec-bright)] text-white text-sm font-medium shadow-lg shadow-[#2D4CFC]/25 transition duration-300 cursor-pointer"
+            >
+              <span>Ir a la web</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-5"
+              >
+                <path
+                  d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+  function setupProjectModal() {
+    const modal = document.getElementById("project-modal");
+    const backdrop = document.getElementById("modal-backdrop");
+    const closeBtn = document.getElementById("modal-close-btn");
+    const modalCard = document.getElementById("modal-card");
+    const modalImage = document.getElementById(
+      "modal-image"
+    ) as HTMLImageElement | null;
+    const modalTitle = document.getElementById("modal-title");
+    const modalStatus = document.getElementById("modal-status");
+    const modalDescription = document.getElementById("modal-description");
+    const modalTechContainer = document.getElementById("modal-technologies");
+    const modalCodeLink = document.getElementById(
+      "modal-code-link"
+    ) as HTMLAnchorElement | null;
+    const modalPreviewLink = document.getElementById(
+      "modal-preview-link"
+    ) as HTMLAnchorElement | null;
+
+    if (!modal || !backdrop || !closeBtn || !modalCard) return;
+
+    function openModal(data: any) {
+      if (!modal || !modalCard) return;
+
+      if (modalImage) {
+        modalImage.src = data.image || "";
+        modalImage.alt = data.title || "";
+      }
+      if (modalTitle) modalTitle.textContent = data.title || "";
+      if (modalStatus) modalStatus.textContent = data.status || "";
+      if (modalDescription) modalDescription.textContent = data.description || "";
+      if (modalCodeLink) modalCodeLink.href = data.link || "#";
+      if (modalPreviewLink) modalPreviewLink.href = data.preview || "#";
+
+      if (modalTechContainer) {
+        modalTechContainer.innerHTML = "";
+        const techs = Array.isArray(data.technologies) ? data.technologies : [];
+        techs.forEach((t: { name: string; icon: string }) => {
+          const badge = document.createElement("span");
+          badge.className =
+            "inline-flex items-center gap-2.5 text-sm font-medium text-zinc-200 hover:text-white transition-colors";
+          badge.innerHTML = `
+            <img src="${t.icon}" alt="${t.name}" class="size-6 object-contain" width="24" height="24" loading="lazy" />
+            <span>${t.name}</span>
+          `;
+          modalTechContainer.appendChild(badge);
+        });
+      }
+
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modalCard.classList.remove("scale-95");
+      modalCard.classList.add("scale-100");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      if (!modal || !modalCard) return;
+
+      modal.classList.add("opacity-0", "pointer-events-none");
+      modalCard.classList.remove("scale-100");
+      modalCard.classList.add("scale-95");
+      document.body.style.overflow = "";
+    }
+
+    document.querySelectorAll(".project-card").forEach((card) => {
+      card.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement;
+        // Evitar abrir el modal si se clickea directamente en los botones externos de la tarjeta
+        if (target.closest(".project-direct-btn")) {
+          return;
+        }
+
+        const dataAttr = card.getAttribute("data-project");
+        if (dataAttr) {
+          try {
+            const data = JSON.parse(dataAttr);
+            openModal(data);
+          } catch (err) {
+            console.error("Error al leer datos del proyecto:", err);
+          }
+        }
+      });
+    });
+
+    closeBtn.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", closeModal);
+
+    window.addEventListener("keydown", (e) => {
+      if (
+        e.key === "Escape" &&
+        modal &&
+        !modal.classList.contains("pointer-events-none")
+      ) {
+        closeModal();
+      }
+    });
+  }
+
+  // Inicializar al cargar el DOM
+  setupProjectModal();
+  document.addEventListener("astro:page-load", setupProjectModal);
+</script>
