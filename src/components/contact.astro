@@ -102,6 +102,16 @@
           id="contact-form"
           class="flex flex-col gap-4"
         >
+          <!-- Campo Honeypot para evitar spam de bots (invisible para usuarios) -->
+          <div class="hidden" aria-hidden="true">
+            <input
+              type="text"
+              name="_honey"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+
           <input
             type="text"
             name="from_name"
@@ -157,6 +167,21 @@
 
     if (!form || !submitBtn || !formStatus) return;
 
+    const COOLDOWN_MS = 2 * 60 * 1000;
+    const STORAGE_KEY = "last_contact_submission";
+
+    const lastSubmission = localStorage.getItem(STORAGE_KEY);
+    if (lastSubmission) {
+      const elapsed = Date.now() - parseInt(lastSubmission, 10);
+      if (elapsed < COOLDOWN_MS) {
+        form.style.display = "none";
+        formStatus.className =
+          "flex justify-center items-center py-8 text-emerald-400 text-base md:text-lg font-medium text-center";
+        formStatus.textContent =
+          "✅ ¡Gracias por tu mensaje! Me pondré en contacto pronto.";
+      }
+    }
+
     const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
     const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
@@ -167,6 +192,28 @@
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
+
+      const honey = (form.elements.namedItem("_honey") as HTMLInputElement | null)?.value;
+      if (honey) {
+        form.reset();
+        form.style.display = "none";
+        formStatus.className =
+          "flex justify-center items-center py-8 text-emerald-400 text-base md:text-lg font-medium text-center";
+        formStatus.textContent =
+          "✅ ¡Gracias por tu mensaje! Me pondré en contacto pronto.";
+        return;
+      }
+
+      const recentSubmission = localStorage.getItem(STORAGE_KEY);
+      if (recentSubmission) {
+        const elapsed = Date.now() - parseInt(recentSubmission, 10);
+        if (elapsed < COOLDOWN_MS) {
+          const remainingSeconds = Math.ceil((COOLDOWN_MS - elapsed) / 1000);
+          formStatus.className = "mt-3 text-amber-400 text-sm text-center block";
+          formStatus.textContent = `Ya enviaste un mensaje hace un momento. Por favor espera ${remainingSeconds} segundos antes de enviar otro.`;
+          return;
+        }
+      }
 
       if (
         !publicKey ||
@@ -191,6 +238,7 @@
       emailjs
         .sendForm(serviceId, templateId, form)
         .then(() => {
+          localStorage.setItem(STORAGE_KEY, Date.now().toString());
           form.reset();
           form.style.display = "none";
           formStatus.className =
