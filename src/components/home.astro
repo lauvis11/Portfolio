@@ -35,10 +35,10 @@ import SkillsList from "./SkillsList.astro";
         </a>
 
         <a
-          href="/cv.pdf"
+          href="/Curriculum-LautaroDanielViscarra.pdf"
           target="_blank"
-          download
-          class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium text-white border border-[#2D4CFC]/40 hover:border-[#2D4CFC] transition-colors duration-300 cursor-pointer"
+          download="Curriculum-LautaroDanielViscarra.pdf"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium text-white border border-[#2D4CFC]/40 hover:border-[#2D4CFC] hover:bg-[#2D4CFC]/10 transition-all duration-300 cursor-pointer group"
         >
           <span>CV</span>
           <svg
@@ -51,6 +51,7 @@ import SkillsList from "./SkillsList.astro";
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
+            class="group-hover:translate-y-0.5 transition-transform duration-300"
           >
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7 10 12 15 17 10"></polyline>
