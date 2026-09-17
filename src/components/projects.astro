@@ -7,7 +7,7 @@ interface ProjectTech {
 interface Project {
   title: string;
   image: string;
-  link: string;
+  link?: string;
   preview: string;
   status: string;
   description: string;
@@ -16,45 +16,50 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "Proyecto Uno",
+    title: "E-commerce NexusPc",
     image: "https://placehold.co/600x400/18181b/2D4CFC?text=Proyecto+1",
-    link: "https://github.com/lauvis11",
-    preview: "#",
+    link: "https://github.com/lauvis11/NexusPc",
+    preview: "https://nexus-pc-front-bay.vercel.app",
     status: "Completado",
     description:
-      "Aplicación interactiva desarrollada con React, JavaScript y CSS moderno. Diseñada con un enfoque en alto rendimiento, transiciones visuales fluidas y un diseño totalmente responsivo y accesible.",
+      "Tienda e-commerce que simula el flujo completo de una tienda online real: catálogo de productos, carrito de compras y pasarela de pagos. Proyecto desarrollado con fines demostrativos para exhibir habilidades técnicas en desarrollo fullstack.",
+    technologies: [
+      { name: "Next.js", icon: "/svg/next.svg" },
+      { name: "TypeScript", icon: "/svg/typeScript.svg" },
+      { name: "Tailwind CSS", icon: "/svg/tailwindcss.svg" },
+      { name: "Express.js", icon: "/svg/express.svg" },
+      { name: "PostgreSQL", icon: "/svg/postgresql.svg" },
+    ],
+  },
+  {
+    title: "BookReview",
+    image: "https://placehold.co/600x400/18181b/2D4CFC?text=Proyecto+2",
+    link: "https://github.com/lauvis11/BookReview",
+    preview: "https://book-review-api-liart.vercel.app",
+    status: "Completado",
+    description:
+      "Pagina web de reseñas de libros con Asistente Personal de Inteligencia Artificial. Permite a los usuarios llevar un registro detallado de sus hábitos de lectura, interactuar con una comunidad a través de reseñas y calificaciones, y obtener recomendaciones y análisis profundos de libros gracias a un asistente de IA.",
+    technologies: [
+      { name: "React", icon: "/svg/react.svg" },
+      { name: "JavaScript", icon: "/svg/javaScript.svg" },
+      { name: "Tailwind CSS", icon: "/svg/tailwindcss.svg" },
+      { name: "Express.js", icon: "/svg/express.svg" },
+      { name: "MySQL", icon: "/svg/mysql.svg" },
+    ],
+  },
+  {
+    title: "Pagina web UDT",
+    image: "https://placehold.co/600x400/18181b/2D4CFC?text=Proyecto+3",
+    preview: "#",
+    status: "Completo",
+    description:
+      "Pagina web institutiva para un Sindicato de docentes, incluye blog de noticias y comunicado, gestión de directivos, inscripciones a cursos e información de contacto",
     technologies: [
       { name: "React", icon: "/svg/react.svg" },
       { name: "JavaScript", icon: "/svg/javaScript.svg" },
       { name: "CSS", icon: "/svg/CSS3.svg" },
-    ],
-  },
-  {
-    title: "Proyecto Dos",
-    image: "https://placehold.co/600x400/18181b/2D4CFC?text=Proyecto+2",
-    link: "https://github.com/lauvis11",
-    preview: "#",
-    status: "En Desarrollo",
-    description:
-      "Plataforma web moderna construida con Next.js, TypeScript y Tailwind CSS. Implementa arquitectura modular, renderizado del lado del servidor y optimizaciones avanzadas de rendimiento.",
-    technologies: [
-      { name: "Next.Js", icon: "/svg/next.svg" },
-      { name: "TypeScript", icon: "/svg/typeScript.svg" },
-      { name: "Tailwind CSS", icon: "/svg/tailwindcss.svg" },
-    ],
-  },
-  {
-    title: "Proyecto Tres",
-    image: "https://placehold.co/600x400/18181b/2D4CFC?text=Proyecto+3",
-    link: "https://github.com/lauvis11",
-    preview: "#",
-    status: "Colaboración",
-    description:
-      "Sitio web colaborativo de alta velocidad construido sobre Astro y Tailwind CSS, diseñado para ofrecer tiempos de carga mínimos, excelente indexación SEO y óptima interactividad.",
-    technologies: [
-      { name: "Astro", icon: "/svg/astro.svg" },
-      { name: "Tailwind CSS", icon: "/svg/tailwindcss.svg" },
-      { name: "JavaScript", icon: "/svg/javaScript.svg" },
+      { name: "Express.js", icon: "/svg/express.svg" },
+      { name: "MySQL", icon: "/svg/mysql.svg" },
     ],
   },
   {
@@ -128,25 +133,31 @@ const projects: Project[] = [
                 </div>
 
                 <div class="flex gap-2 ml-auto flex-shrink-0">
-                  <a
-                    target="_blank"
-                    href={project.link}
-                    aria-label="GitHub"
-                    title="Ver código en GitHub"
-                    class="project-direct-btn size-12 md:size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-[var(--white-icon-tr)] p-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="size-6 md:size-7"
-                    >
-                      <path d="M24 12L18.3431 17.6569L16.9289 16.2426L21.1716 12L16.9289 7.75736L18.3431 6.34315L24 12ZM2.82843 12L7.07107 16.2426L5.65685 17.6569L0 12L5.65685 6.34315L7.07107 7.75736L2.82843 12ZM9.78845 21H7.66009L14.2116 3H16.3399L9.78845 21Z" />
-                    </svg>
-                  </a>
+                  {
+                    project.link && project.link !== "#" && project.link !== "" && (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={project.link}
+                        aria-label="GitHub"
+                        title="Ver código en GitHub"
+                        class="project-direct-btn size-12 md:size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-[var(--white-icon-tr)] p-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          class="size-6 md:size-7"
+                        >
+                          <path d="M24 12L18.3431 17.6569L16.9289 16.2426L21.1716 12L16.9289 7.75736L18.3431 6.34315L24 12ZM2.82843 12L7.07107 16.2426L5.65685 17.6569L0 12L5.65685 6.34315L7.07107 7.75736L2.82843 12ZM9.78845 21H7.66009L14.2116 3H16.3399L9.78845 21Z" />
+                        </svg>
+                      </a>
+                    )
+                  }
 
                   <a
                     target="_blank"
+                    rel="noopener noreferrer"
                     href={project.preview}
                     aria-label="Preview"
                     title="Visitar sitio web"
@@ -293,6 +304,7 @@ const projects: Project[] = [
             <a
               id="modal-code-link"
               target="_blank"
+              rel="noopener noreferrer"
               href="#"
               class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-[var(--white-icon-tr)] bg-[#1414149c] hover:bg-[var(--white-icon-tr)] text-white text-sm font-medium transition duration-300 cursor-pointer"
             >
@@ -313,6 +325,7 @@ const projects: Project[] = [
             <a
               id="modal-preview-link"
               target="_blank"
+              rel="noopener noreferrer"
               href="#"
               class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--sec)] hover:bg-[var(--sec-bright)] text-white text-sm font-medium shadow-lg shadow-[#2D4CFC]/25 transition duration-300 cursor-pointer"
             >
@@ -367,8 +380,22 @@ const projects: Project[] = [
       if (modalTitle) modalTitle.textContent = data.title || "";
       if (modalStatus) modalStatus.textContent = data.status || "";
       if (modalDescription) modalDescription.textContent = data.description || "";
-      if (modalCodeLink) modalCodeLink.href = data.link || "#";
-      if (modalPreviewLink) modalPreviewLink.href = data.preview || "#";
+      if (modalCodeLink) {
+        if (data.link && data.link !== "#" && data.link !== "") {
+          modalCodeLink.href = data.link;
+          modalCodeLink.style.display = "flex";
+        } else {
+          modalCodeLink.style.display = "none";
+        }
+      }
+      if (modalPreviewLink) {
+        if (data.preview && data.preview !== "") {
+          modalPreviewLink.href = data.preview;
+          modalPreviewLink.style.display = "flex";
+        } else {
+          modalPreviewLink.style.display = "none";
+        }
+      }
 
       if (modalTechContainer) {
         modalTechContainer.innerHTML = "";
