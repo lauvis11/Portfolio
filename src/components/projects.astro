@@ -199,28 +199,26 @@ const projects: Project[] = [
       </svg>
     </a>
   </div>
+</section>
 
-  <!-- Modal Detallado de Proyecto -->
-  <div
-    id="project-modal"
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-all duration-300"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modal-title"
-  >
-    <!-- Fondo difuminado -->
+
+<div
+  id="project-modal"
+  class="fixed inset-0 z-[999] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300 ease-out"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modal-title"
+>
     <div
       id="modal-backdrop"
-      class="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity"
+      class="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity duration-300"
     >
     </div>
 
-    <!-- Tarjeta del Modal -->
     <div
       id="modal-card"
-      class="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-[#121215] border border-[#ffffff1c] rounded-3xl shadow-2xl shadow-black/90 z-10 scale-95 transition-all duration-300"
+      class="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-[#121215] border border-[#ffffff1c] rounded-3xl shadow-2xl shadow-black/90 z-10 scale-95 transition-transform duration-300 ease-out"
     >
-      <!-- Botón de Cerrar -->
       <button
         id="modal-close-btn"
         type="button"
@@ -244,7 +242,6 @@ const projects: Project[] = [
       </button>
 
       <div class="grid grid-cols-1 md:grid-cols-12 min-h-[460px]">
-        <!-- Lado Izquierdo: Imagen -->
         <div
           class="md:col-span-6 bg-[#0c0c0e] flex items-center justify-center p-6 md:p-8 border-b md:border-b-0 md:border-r border-[#ffffff10]"
         >
@@ -260,7 +257,6 @@ const projects: Project[] = [
           </div>
         </div>
 
-        <!-- Lado Derecho: Información del Proyecto -->
         <div
           class="md:col-span-6 p-6 md:p-8 flex flex-col justify-between space-y-6"
         >
@@ -285,7 +281,6 @@ const projects: Project[] = [
             >
             </p>
 
-            <!-- Tecnologías -->
             <div class="pt-2">
               <h4
                 class="text-xs uppercase tracking-wider font-semibold text-zinc-400 mb-3"
@@ -296,11 +291,9 @@ const projects: Project[] = [
             </div>
           </div>
 
-          <!-- Botones de Acción (<> para código, -> para web) -->
           <div
             class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4 border-t border-[#ffffff10]"
           >
-            <!-- Ver Código (<>) -->
             <a
               id="modal-code-link"
               target="_blank"
@@ -321,7 +314,6 @@ const projects: Project[] = [
               <span>Ver código</span>
             </a>
 
-            <!-- Ir a la Web (->) -->
             <a
               id="modal-preview-link"
               target="_blank"
@@ -346,7 +338,6 @@ const projects: Project[] = [
       </div>
     </div>
   </div>
-</section>
 
 <script>
   function setupProjectModal() {
@@ -415,7 +406,6 @@ const projects: Project[] = [
       modal.classList.remove("opacity-0", "pointer-events-none");
       modalCard.classList.remove("scale-95");
       modalCard.classList.add("scale-100");
-      document.body.style.overflow = "hidden";
     }
 
     function closeModal() {
@@ -424,13 +414,31 @@ const projects: Project[] = [
       modal.classList.add("opacity-0", "pointer-events-none");
       modalCard.classList.remove("scale-100");
       modalCard.classList.add("scale-95");
-      document.body.style.overflow = "";
     }
+
+    modal.addEventListener(
+      "wheel",
+      (e) => {
+        if (!modalCard.contains(e.target as Node)) {
+          e.preventDefault();
+        }
+      },
+      { passive: false }
+    );
+
+    modal.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!modalCard.contains(e.target as Node)) {
+          e.preventDefault();
+        }
+      },
+      { passive: false }
+    );
 
     document.querySelectorAll(".project-card").forEach((card) => {
       card.addEventListener("click", (e) => {
         const target = e.target as HTMLElement;
-        // Evitar abrir el modal si se clickea directamente en los botones externos de la tarjeta
         if (target.closest(".project-direct-btn")) {
           return;
         }
@@ -461,7 +469,10 @@ const projects: Project[] = [
     });
   }
 
-  // Inicializar al cargar el DOM
-  setupProjectModal();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupProjectModal);
+  } else {
+    setupProjectModal();
+  }
   document.addEventListener("astro:page-load", setupProjectModal);
 </script>
