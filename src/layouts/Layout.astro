@@ -128,6 +128,20 @@ const {
     }
   }
 
+  /* Hide Astro dev toolbar completely to prevent toolbar collision */
+  astro-dev-toolbar,
+  [data-astro-dev-toolbar],
+  #astro-dev-toolbar {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    top: -9999px !important;
+    height: 0 !important;
+    width: 0 !important;
+  }
+
   /* Section entrance reveal animation */
   .reveal-section {
     opacity: 0;
