@@ -153,6 +153,16 @@ const {
     will-change: opacity, transform;
   }
 
+  @media (max-width: 768px) {
+    .reveal-section {
+      transform: translateY(16px);
+      transition:
+        opacity 0.45s ease-out,
+        transform 0.45s ease-out;
+      transition-delay: 0s;
+    }
+  }
+
   .reveal-section.is-revealed {
     opacity: 1 !important;
     transform: translateY(0) !important;
@@ -165,6 +175,10 @@ const {
     const sections = document.querySelectorAll(".reveal-section");
     if (!sections.length) return;
 
+    const isMobile = window.innerWidth <= 768;
+    const marginOffset = isMobile ? "-15px" : "-120px";
+    const initialOffset = isMobile ? 15 : 120;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -175,14 +189,14 @@ const {
         });
       },
       {
-        threshold: 0.15,
-        rootMargin: "0px 0px -120px 0px",
+        threshold: isMobile ? 0.02 : 0.15,
+        rootMargin: `0px 0px ${marginOffset} 0px`,
       }
     );
 
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 120 && rect.bottom > 0) {
+      if (rect.top < window.innerHeight - initialOffset && rect.bottom > 0) {
         section.classList.add("is-revealed");
       } else {
         observer.observe(section);
