@@ -50,8 +50,8 @@ const projects: Project[] = [
   {
     title: "Pagina web UDT",
     image: "/Captura-de-pantalla-udt.webp",
-    preview: "#",
-    status: "Completo",
+    preview: "https://pagina-web-udt.vercel.app/",
+    status: "Completado",
     description:
       "Pagina web institutiva para un Sindicato de docentes, incluye blog de noticias y comunicado, gestión de directivos, inscripciones a cursos e información de contacto",
     technologies: [
@@ -64,8 +64,8 @@ const projects: Project[] = [
   },
   {
     title: "BetterForm",
-    image: "https://placehold.co/600x400/18181b/2D4CFC?text=En+desarrollo",
-    link: "https://github.com/lauvis11",
+    image: "/Captura-de-pantalla-Betterform.webp",
+    link: "https://github.com/lauvis11/Betterform",
     preview: "#",
     status: "En proceso",
     description:
@@ -299,7 +299,6 @@ const projects: Project[] = [
               id="modal-code-link"
               target="_blank"
               rel="noopener noreferrer"
-              href="#"
               class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-[var(--white-icon-tr)] bg-[#1414149c] hover:bg-[var(--white-icon-tr)] text-white text-sm font-medium transition duration-300 cursor-pointer"
             >
               <svg
@@ -319,7 +318,6 @@ const projects: Project[] = [
               id="modal-preview-link"
               target="_blank"
               rel="noopener noreferrer"
-              href="#"
               class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--sec)] hover:bg-[var(--sec-bright)] text-white text-sm font-medium shadow-lg shadow-[#2D4CFC]/25 transition duration-300 cursor-pointer"
             >
               <span>Ir a la web</span>
@@ -375,16 +373,20 @@ const projects: Project[] = [
       if (modalCodeLink) {
         if (data.link && data.link !== "#" && data.link !== "") {
           modalCodeLink.href = data.link;
+          modalCodeLink.setAttribute("href", data.link);
           modalCodeLink.style.display = "flex";
         } else {
+          modalCodeLink.removeAttribute("href");
           modalCodeLink.style.display = "none";
         }
       }
       if (modalPreviewLink) {
-        if (data.preview && data.preview !== "") {
+        if (data.preview && data.preview !== "#" && data.preview !== "") {
           modalPreviewLink.href = data.preview;
+          modalPreviewLink.setAttribute("href", data.preview);
           modalPreviewLink.style.display = "flex";
         } else {
+          modalPreviewLink.removeAttribute("href");
           modalPreviewLink.style.display = "none";
         }
       }
@@ -458,6 +460,14 @@ const projects: Project[] = [
 
     closeBtn.addEventListener("click", closeModal);
     backdrop.addEventListener("click", closeModal);
+
+    modalCodeLink?.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+
+    modalPreviewLink?.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
 
     window.addEventListener("keydown", (e) => {
       if (
